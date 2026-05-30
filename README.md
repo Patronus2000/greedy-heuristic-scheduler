@@ -3,7 +3,7 @@
 
 A scheduling system for electric buses charging along the Bengaluru–Kochi corridor. Given a scenario (buses, route, weights), it decides which charging stations each bus uses and in what order buses use each charger — minimising wait times, ensuring operator fairness, and respecting hard constraints.
 
-**[Live App →](https://your-app.streamlit.app)** *(update after deployment)*
+**[Live App →](https://your-app.streamlit.app)** *(https://greedy-heuristic-scheduler-akhilp.streamlit.app/)*
 
 ---
 
