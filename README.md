@@ -137,10 +137,3 @@ Verifies:
 - All 5 scenarios produce zero hard constraint violations
 
 ---
-
-## Deployment
-
-Hosted on [Streamlit Community Cloud](https://streamlit.io/cloud):
-1. Push repo to GitHub (must be public)
-2. Go to share.streamlit.io → New app → point to `app.py`
-3. Done — Streamlit reads `requirements.txt` automatically
