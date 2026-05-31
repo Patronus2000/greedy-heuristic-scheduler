@@ -1,10 +1,9 @@
 # Bus Charging Scheduler
 
-> **Exponent Energy SDE Assessment — May 2026**
 
 A scheduling system for electric buses charging along the Bengaluru–Kochi corridor. Given a scenario (buses, route, weights), it decides which charging stations each bus uses and in what order buses use each charger — minimising wait times, ensuring operator fairness, and respecting hard constraints.
 
-**[Live App →](https://your-app.streamlit.app)** *(update after deployment)*
+**[Live App →](https://your-app.streamlit.app)** *(https://greedy-heuristic-scheduler-akhilp.streamlit.app/)*
 
 ---
 
@@ -138,10 +137,3 @@ Verifies:
 - All 5 scenarios produce zero hard constraint violations
 
 ---
-
-## Deployment
-
-Hosted on [Streamlit Community Cloud](https://streamlit.io/cloud):
-1. Push repo to GitHub (must be public)
-2. Go to share.streamlit.io → New app → point to `app.py`
-3. Done — Streamlit reads `requirements.txt` automatically
