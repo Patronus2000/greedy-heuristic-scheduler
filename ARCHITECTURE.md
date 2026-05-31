@@ -179,4 +179,4 @@ Three steps: write function, register it, add weight. No engine changes.
 
 7. **Deterministic processing order** — buses processed by departure time, then by priority. Same input always gives same output.
 
-8. **Refinement converges** — 3 sweeps max, but in practice 1 is enough.
+8. **Refinement converges** - 3 sweeps max, but in practice 1 is enough.
