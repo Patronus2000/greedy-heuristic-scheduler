@@ -8,9 +8,9 @@ So I didn't reach for heavy machinery. The scheduler is a greedy constructive he
 
 I did consider two alternatives:
 
-**Discrete event simulation** — makes sense when you have randomness (variable travel times, random breakdowns, etc.). We don't. Everything here is deterministic. A DES would just be a more complicated way to compute the same thing.
+**Discrete event simulation** - makes sense when you have randomness (variable travel times, random breakdowns, etc.). We don't. Everything here is deterministic. A DES would just be a more complicated way to compute the same thing.
 
-**ILP / constraint programming** — would give optimal solutions, but the spec says "adding a new rule must not require rewriting the engine." With an ILP, adding a rule means reformulating the objective function and possibly the constraints. That's not trivial and it breaks the pluggability requirement. I'd rather have a near-optimal solution I can extend in 10 minutes than a provably optimal one that takes a day to modify.
+**ILP / constraint programming** - would give optimal solutions, but the spec says "adding a new rule must not require rewriting the engine." With an ILP, adding a rule means reformulating the objective function and possibly the constraints. That's not trivial and it breaks the pluggability requirement. I'd rather have a near-optimal solution I can extend in 10 minutes than a provably optimal one that takes a day to modify.
 
 The greedy + scoring approach gets me both: rules are just functions that take a schedule and return a number. Want a new rule? Write a function, register it, add a weight to the config. The search strategy (greedy vs beam search vs whatever) is completely independent of the scoring — you could swap it out later without touching any rule code.
 
@@ -95,9 +95,9 @@ I thought about this pretty carefully — "if someone tells me tomorrow that X i
 
 ### Things that need real refactoring
 
-- **Partial charging** (charge to 80% in 15 min instead of 100% in 25 min) — charging duration becomes a decision variable, which blows up the plan space. Scoring framework still works though, you'd just need a smarter enumerator.
-- **Multiple routes sharing stations** — the station tracker is already keyed by name not route, so the sharing part actually works. But the enumerator currently assumes one route, so that needs a small refactor.
-- **Non-linear routes (branches, hubs)** — the route model would need to become a graph instead of a list. Significant change to the enumerator, but none of the rule functions care about route topology, so they'd survive untouched.
+- **Partial charging** (charge to 80% in 15 min instead of 100% in 25 min) - charging duration becomes a decision variable, which blows up the plan space. Scoring framework still works though, you'd just need a smarter enumerator.
+- **Multiple routes sharing stations** - the station tracker is already keyed by name not route, so the sharing part actually works. But the enumerator currently assumes one route, so that needs a small refactor.
+- **Non-linear routes (branches, hubs)** - the route model would need to become a graph instead of a list. Significant change to the enumerator, but none of the rule functions care about route topology, so they'd survive untouched.
 
 ---
 
@@ -165,17 +165,17 @@ Three steps: write function, register it, add weight. No engine changes.
 
 ## Assumptions
 
-1. **Constant speed** — 60 km/h everywhere. Overridable per-bus via `vehicle_override.speed_kmh` if needed.
+1. **Constant speed** - 60 km/h everywhere. Overridable per-bus via `vehicle_override.speed_kmh` if needed.
 
-2. **Buses depart on time** — the scheduler controls charging, not departures. Departure time is an input.
+2. **Buses depart on time** - the scheduler controls charging, not departures. Departure time is an input.
 
-3. **Full charges only** — every charge session fills to 240 km (or the bus's effective range). No partial charging. Duration is fixed per charger.
+3. **Full charges only** - every charge session fills to 240 km (or the bus's effective range). No partial charging. Duration is fixed per charger.
 
-4. **No battery drain while idle** — a bus waiting in queue or being charged doesn't consume range. This is standard for this kind of problem.
+4. **No battery drain while idle** - a bus waiting in queue or being charged doesn't consume range. This is standard for this kind of problem.
 
-5. **FIFO at stations** — when buses arrive at the same station around the same time, the order they get chargers is determined by when the scheduler commits their plans. The scored greedy assignment naturally spreads buses across stations.
+5. **FIFO at stations** - when buses arrive at the same station around the same time, the order they get chargers is determined by when the scheduler commits their plans. The scored greedy assignment naturally spreads buses across stations.
 
-6. **Fairness = intra + inter variance** — I interpreted "each operator's fleet should run smoothly" as both within-operator consistency and across-operator equity.
+6. **Fairness = intra + inter variance** - I interpreted "each operator's fleet should run smoothly" as both within-operator consistency and across-operator equity.
 
 7. **Deterministic processing order** — buses processed by departure time, then by priority. Same input always gives same output.
 
