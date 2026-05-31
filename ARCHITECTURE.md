@@ -4,7 +4,7 @@
 
 I spent some time at the start just working out how big this problem actually is. Each bus does 540 km on a 240 km battery, so it needs at least two charging stops. When you enumerate which stations are reachable from which points given range constraints, there are only 8 valid charging plans per direction. 20 buses × 8 plans = 160 options total. That's... not a lot.
 
-So I didn't reach for heavy machinery. The scheduler is a greedy constructive heuristic — it processes buses one at a time (earliest departure first), scores every valid plan for that bus against the current state of the world, and commits the best one. After all buses are assigned, a local search pass re-evaluates each bus while holding the others fixed, to catch cases where an early assignment was locally fine but globally unlucky.
+So I didn't reach for heavy machinery. The scheduler is a greedy constructive heuristic - it processes buses one at a time (earliest departure first), scores every valid plan for that bus against the current state of the world, and commits the best one. After all buses are assigned, a local search pass re-evaluates each bus while holding the others fixed, to catch cases where an early assignment was locally fine but globally unlucky.
 
 I did consider two alternatives:
 
@@ -29,10 +29,10 @@ Before choosing an approach, I analysed the actual decision space:
 - With 20 buses × 8 plans each, the search space is manageable without complex optimisation machinery.
 
 **Why not a Discrete Event Simulator (DES)?**
-A DES is the right tool when you need to model stochastic events (random arrivals, failures, variable travel times). Here, everything is deterministic — travel times are fixed, charging durations are fixed, there's no randomness. A DES adds complexity without benefit.
+A DES is the right tool when you need to model stochastic events (random arrivals, failures, variable travel times). Here, everything is deterministic - travel times are fixed, charging durations are fixed, there's no randomness. A DES adds complexity without benefit.
 
 **Why not an ILP / constraint solver?**
-An integer linear program would solve this optimally, but adding a new rule requires reformulating the objective function — a non-trivial change. The spec explicitly says *"Adding a new rule must not require rewriting the engine."* A rule-based scoring function satisfies this; an ILP reformulation doesn't.
+An integer linear program would solve this optimally, but adding a new rule requires reformulating the objective function - a non-trivial change. The spec explicitly says *"Adding a new rule must not require rewriting the engine."* A rule-based scoring function satisfies this; an ILP reformulation doesn't.
 
 **Why greedy + scoring works here:**
 1. The decision space is small. Greedy with look-ahead is effective.
