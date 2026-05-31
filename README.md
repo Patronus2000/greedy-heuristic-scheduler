@@ -12,8 +12,8 @@ A scheduling system for electric buses charging along the Bengaluru–Kochi corr
 
 ```bash
 # Clone and install
-git clone https://github.com/your-username/bus-charging-scheduler
-cd bus-charging-scheduler
+git clone https://github.com/Patronus2000/Exponent-Energy.git
+cd Exponent-Energy
 pip install -r requirements.txt
 
 # Run
